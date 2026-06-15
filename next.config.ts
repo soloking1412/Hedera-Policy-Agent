@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  serverExternalPackages: ["@hiero-ledger/sdk", "@hashgraph/hedera-agent-kit"],
 };
 
 export default nextConfig;
