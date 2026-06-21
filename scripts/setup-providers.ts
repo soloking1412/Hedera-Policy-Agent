@@ -6,7 +6,7 @@ import {
   AccountId,
 } from "@hiero-ledger/sdk";
 import * as dotenv from "dotenv";
-import { writeFileSync, existsSync } from "fs";
+import { writeFileSync, existsSync, readFileSync } from "fs";
 
 dotenv.config({ path: ".env.local" });
 
@@ -37,7 +37,6 @@ async function main() {
     console.log(`Created ${name} provider: ${accountId.toString()}`);
   }
 
-  const envKey = "PROVIDER_WEATHER_ACCOUNT";
   const envContent = [
     `PROVIDER_WEATHER_ACCOUNT=${accounts["weather"]}`,
     `PROVIDER_NEWS_ACCOUNT=${accounts["news"]}`,
@@ -46,9 +45,7 @@ async function main() {
   ].join("\n");
 
   const envFile = ".env.local";
-  const existing = existsSync(envFile)
-    ? require("fs").readFileSync(envFile, "utf8")
-    : "";
+  const existing = existsSync(envFile) ? readFileSync(envFile, "utf8") : "";
 
   const cleaned = existing
     .split("\n")

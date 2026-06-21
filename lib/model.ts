@@ -3,9 +3,15 @@ import type { LanguageModel } from "ai";
 export function getModel(): LanguageModel {
   const provider = process.env.LLM_PROVIDER ?? "google";
 
+  if (provider === "groq") {
+    const { createGroq } = require("@ai-sdk/groq");
+    const groq = createGroq({ apiKey: process.env.GROQ_API_KEY });
+    return groq(process.env.LLM_MODEL ?? "llama-3.1-8b-instant");
+  }
+
   if (provider === "anthropic") {
     const { anthropic } = require("@ai-sdk/anthropic");
-    return anthropic(process.env.LLM_MODEL ?? "claude-haiku-4-5-20251001");
+    return anthropic(process.env.LLM_MODEL ?? "claude-3-5-haiku-20241022");
   }
 
   if (provider === "openai") {
